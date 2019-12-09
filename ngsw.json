@@ -1,10 +1,10 @@
 {
   "configVersion": 1,
-  "timestamp": 1575823311305,
+  "timestamp": 1575883932827,
   "index": "https://kalpeshbhole.github.io/my-home-app/my-home-app/index.html",
   "assetGroups": [
     {
-      "name": "my-home-app",
+      "name": "app",
       "installMode": "prefetch",
       "updateMode": "prefetch",
       "urls": [],
