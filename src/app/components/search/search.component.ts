@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SearchService } from 'src/app/services';
+import { Movie } from 'src/app/models';
 
 @Component({
   selector: 'app-search',
@@ -8,7 +9,8 @@ import { SearchService } from 'src/app/services';
 })
 export class SearchComponent implements OnInit {
   searchTerm: string;
-  elements: any[] = [];
+  movies: Movie[] = [];
+  error: any;
 
   constructor(private searchService: SearchService) { }
 
@@ -16,8 +18,12 @@ export class SearchComponent implements OnInit {
   }
 
   search() {
-    this.searchService.searchTerm(this.searchTerm, 10).subscribe(elements => {
-      this.elements = elements;
+    this.searchService.searchTitle(this.searchTerm, 10).subscribe(movies => {
+      this.error = movies;
+      this.movies = movies;
+    },
+    (err) => {
+      this.error = err;
     });
   }
 
