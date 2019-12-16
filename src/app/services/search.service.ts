@@ -86,7 +86,7 @@ export class SearchService {
             id: movie['id'],
             name: movie['title'],
             description: movie['overview'],
-            imageUrls: [this.the_movie_db_image_url + movie['poster_path']],
+            imageUrls: [movie['poster_path'] ? this.the_movie_db_image_url + movie['poster_path']: ''],
             url: '',
             releaseDate: movie['release_date']
           } as Movie;
@@ -103,31 +103,27 @@ export class SearchService {
 
     return this.httpClient.get<Movie>(this.the_movie_db_movie_url + '/' + movieId, { params }).pipe(
       map(movie => {
-        return this.getMovieCreditsFromTMDB(movieId).subscribe(credits => {
-          return {
-            id: movie['id'],
-            name: movie['title'],
-            description: movie['overview'],
-            imageUrls: [this.the_movie_db_image_url + movie['poster_path']],
-            url: '',
-            releaseDate: movie['release_date'],
-            cast: credits.cast,
-            crew: credits.crew,
-            ProductionCompanies: _.map(movie['production_companies'], (productionCompany) => {
-              return {
-                id: productionCompany['id'],
-                name: productionCompany['name'],
-                logoImageUrl: this.the_movie_db_image_url + productionCompany['logo_path'],
-                country: _.find(movie['production_countries'], country => {
-                  return country['name']
-                })
-              } as ProductionCompany;
-            }),
-            genres: movie['genres'],
-            languages: _.map(movie['spoken_languages'], 'name'),
-            runtime: movie['runtime']
-          } as Movie;
-        });
+        return {
+          id: movie['id'],
+          name: movie['title'],
+          description: movie['overview'],
+          imageUrls: [this.the_movie_db_image_url + movie['poster_path']],
+          url: '',
+          releaseDate: movie['release_date'],
+          ProductionCompanies: _.map(movie['production_companies'], (productionCompany) => {
+            return {
+              id: productionCompany['id'],
+              name: productionCompany['name'],
+              logoImageUrl: productionCompany['logo_path'] ? this.the_movie_db_image_url + productionCompany['logo_path']: '',
+              country: _.result(_.find(movie['production_countries'], country => {
+                return country['iso_3166_1'] === productionCompany['origin_country'];
+              }), 'name')
+            } as ProductionCompany;
+          }),
+          genres: movie['genres'],
+          languages: _.map(movie['spoken_languages'], 'name'),
+          runtime: movie['runtime']
+        } as Movie;
       })
     );
   }
@@ -146,7 +142,7 @@ export class SearchService {
               gender: cast['gender'],
               name: cast['name'],
               order: cast['order'],
-              profileImageUrl: this.the_movie_db_image_url + cast['profile_path']
+              profileImageUrl: cast['profile_path'] ? this.the_movie_db_image_url + cast['profile_path']: ''
             } as Cast;
           }),
           crew: _.map(credits['crew'], (crew) => {
@@ -156,7 +152,7 @@ export class SearchService {
               gender: crew['gender'],
               name: crew['name'],
               job: crew['job'],
-              profileImageUrl: this.the_movie_db_image_url + crew['profile_path']
+              profileImageUrl: crew['profile_path'] ? this.the_movie_db_image_url + crew['profile_path']: ''
             } as Crew;
           }),
         };

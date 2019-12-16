@@ -29,7 +29,11 @@ export class SearchComponent implements OnInit {
 
   add(movieId: string) {
     this.searchService.getMovieFromTMDB(movieId).subscribe(movie => {
-      this.error = movie;
+      this.searchService.getMovieCreditsFromTMDB(movieId).subscribe(credits => {
+        movie.cast = credits.cast;
+        movie.crew = credits.crew;
+        this.error = movie;
+      });
     },
     (err) => {
       this.error = err;
