@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Movie } from '../models';
+import { Movie, ProductionCompany, Crew, Cast } from '../models';
 import { map } from 'rxjs/operators';
 import * as _ from 'lodash';
 
@@ -10,7 +10,10 @@ import * as _ from 'lodash';
 export class SearchService {
 
   service_url: string = 'https://kgsearch.googleapis.com/v1/entities:search';
-wiki_api_url: string = 'https://en.wikipedia.org/w/api.php';
+  wiki_api_url: string = 'https://en.wikipedia.org/w/api.php';
+  the_movie_db_search_url: string = 'https://api.themoviedb.org/3/search/movie';
+  the_movie_db_movie_url: string = 'https://api.themoviedb.org/3/movie';
+  the_movie_db_image_url: string = 'https://image.tmdb.org/t/p/original';
   constructor(private httpClient: HttpClient) { }
 
   searchTerm(query: string, limit: number) {
@@ -36,7 +39,6 @@ wiki_api_url: string = 'https://en.wikipedia.org/w/api.php';
     );
   }
 
-
   searchTitle(title: string, limit: number) {
 
     const params = new HttpParams()
@@ -46,10 +48,10 @@ wiki_api_url: string = 'https://en.wikipedia.org/w/api.php';
       .set('list', '')
       .set('generator', 'allpages')
       .set('inprop', 'url')
-      .set('tltemplates', 'Template:Infobox film' )
+      .set('tltemplates', 'Template:Infobox film')
       .set('gapprefix', title)
       .set('gapnamespace', '0')
-      .set('gapfilterredir','nonredirects')
+      .set('gapfilterredir', 'nonredirects')
       .set('gaplimit', limit.toString());
 
     return this.httpClient.get<Movie[]>(this.wiki_api_url, { params }).pipe(
@@ -67,4 +69,99 @@ wiki_api_url: string = 'https://en.wikipedia.org/w/api.php';
       })
     );
   }
+
+  //Themoviedb.org
+  SearchMoviesInTMDB(title: string, page: number) {
+    const params = new HttpParams()
+      .set('api_key', '9541c22073c3d2aa3521d1a99c015460')
+      .set('include_adult', 'false')
+      .set('language', 'en-US')
+      .set('query', title)
+      .set('page', page.toString());
+
+    return this.httpClient.get<Movie[]>(this.the_movie_db_search_url, { params }).pipe(
+      map(response => {
+        return response['results'].map(movie => {
+          return {
+            id: movie['id'],
+            name: movie['title'],
+            description: movie['overview'],
+            imageUrls: [this.the_movie_db_image_url + movie['poster_path']],
+            url: '',
+            releaseDate: movie['release_date']
+          } as Movie;
+        })
+      })
+    );
+  }
+
+  //Themoviedb.org
+  getMovieFromTMDB(movieId: string) {
+    const params = new HttpParams()
+      .set('api_key', '9541c22073c3d2aa3521d1a99c015460')
+      .set('language', 'en-US');
+
+    return this.httpClient.get<Movie>(this.the_movie_db_movie_url + '/' + movieId, { params }).pipe(
+      map(movie => {
+        return this.getMovieCreditsFromTMDB(movieId).subscribe(credits => {
+          return {
+            id: movie['id'],
+            name: movie['title'],
+            description: movie['overview'],
+            imageUrls: [this.the_movie_db_image_url + movie['poster_path']],
+            url: '',
+            releaseDate: movie['release_date'],
+            cast: credits.cast,
+            crew: credits.crew,
+            ProductionCompanies: _.map(movie['production_companies'], (productionCompany) => {
+              return {
+                id: productionCompany['id'],
+                name: productionCompany['name'],
+                logoImageUrl: this.the_movie_db_image_url + productionCompany['logo_path'],
+                country: _.find(movie['production_countries'], country => {
+                  return country['name']
+                })
+              } as ProductionCompany;
+            }),
+            genres: movie['genres'],
+            languages: _.map(movie['spoken_languages'], 'name'),
+            runtime: movie['runtime']
+          } as Movie;
+        });
+      })
+    );
+  }
+
+  getMovieCreditsFromTMDB(movieId: string) {
+    const params = new HttpParams()
+      .set('api_key', '9541c22073c3d2aa3521d1a99c015460');
+
+    return this.httpClient.get<any>(this.the_movie_db_movie_url + '/' + movieId + '/credits', { params }).pipe(
+      map(credits => {
+        return {
+          cast: _.map(credits['cast'], (cast) => {
+            return {
+              id: cast['credit_id'],
+              character: cast['character'],
+              gender: cast['gender'],
+              name: cast['name'],
+              order: cast['order'],
+              profileImageUrl: this.the_movie_db_image_url + cast['profile_path']
+            } as Cast;
+          }),
+          crew: _.map(credits['crew'], (crew) => {
+            return {
+              id: crew['credit_id'],
+              department: crew['department'],
+              gender: crew['gender'],
+              name: crew['name'],
+              job: crew['job'],
+              profileImageUrl: this.the_movie_db_image_url + crew['profile_path']
+            } as Crew;
+          }),
+        };
+      })
+    );
+  }
+
 }

@@ -6,16 +6,16 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
-import { SearchComponent, EntityListComponent, EntityDetailsComponent } from './components';
-import { SearchService, EntityService } from './services';
+import { SearchComponent, MovieListComponent, MovieDetailsComponent } from './components';
+import { SearchService, MovieService } from './services';
 import {FormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
     SearchComponent,
-    EntityDetailsComponent,
-    EntityListComponent
+    MovieListComponent,
+    MovieDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -27,7 +27,7 @@ import {FormsModule} from '@angular/forms';
   ],
   providers: [
     SearchService,
-    EntityService
+    MovieService
   ],
   bootstrap: [AppComponent]
 })

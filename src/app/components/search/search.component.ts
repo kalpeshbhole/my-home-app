@@ -18,8 +18,8 @@ export class SearchComponent implements OnInit {
   }
 
   search() {
-    this.searchService.searchTitle(this.searchTerm, 10).subscribe(movies => {
-      this.error = movies;
+    this.searchService.SearchMoviesInTMDB(this.searchTerm, 1).subscribe(movies => {
+      //this.error = movies;
       this.movies = movies;
     },
     (err) => {
@@ -27,4 +27,12 @@ export class SearchComponent implements OnInit {
     });
   }
 
+  add(movieId: string) {
+    this.searchService.getMovieFromTMDB(movieId).subscribe(movie => {
+      this.error = movie;
+    },
+    (err) => {
+      this.error = err;
+    });
+  }
 }

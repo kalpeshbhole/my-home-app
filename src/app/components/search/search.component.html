@@ -12,8 +12,11 @@
         <img *ngIf="movie.imageUrls.length > 0" class="card-img-top" src="{{movie.imageUrls[0]}}" alt="image">
         <div class="card-body">
             <h4 class="card-title">{{movie.name}}</h4>
-            <p class="card-text">{{movie.description}}</p>
-            <a href="javascript:void(0)" class="btn btn-primary">Add</a>
+            <p class="card-text">
+                    {{movie.releaseDate | date:'longDate'}}
+                <!-- {{movie.description}} -->
+            </p>
+            <button class="input-group-append btn btn-primary" type="button" (click)="add(movie.id)">Add</button>
         </div>
     </div>
 </div>
