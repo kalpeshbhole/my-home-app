@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MovieService } from 'src/app/services';
 import { map } from 'rxjs/operators';
 import { Movie } from 'src/app/models';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-movie-list',
@@ -12,13 +13,14 @@ export class MovieListComponent implements OnInit {
 
   movies: Movie[] = [];
  
-  constructor(private movieService: MovieService) { }
+  constructor(private movieService: MovieService, private spinnerService: NgxSpinnerService) { }
  
   ngOnInit() {
     this.getMoviesList();
   }
  
   getMoviesList() {
+    this.spinnerService.show();
     this.movieService.getMoviesList().snapshotChanges().pipe(
       map(changes =>
         changes.map(c =>
@@ -27,6 +29,7 @@ export class MovieListComponent implements OnInit {
       )
     ).subscribe(movies => {
       this.movies = movies;
+      this.spinnerService.hide();
     });
   }
 

@@ -119,7 +119,7 @@ export class SearchService {
               logoImageUrl: productionCompany['logo_path'] ? this.the_movie_db_image_url + productionCompany['logo_path']: '',
               country: _.result(_.find(movie['production_countries'], country => {
                 return country['iso_3166_1'] === productionCompany['origin_country'];
-              }), 'name')
+              }), 'name') || ''
             } as ProductionCompany;
           }),
           genres: movie['genres'],
