@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SearchService } from 'src/app/services';
+import { SearchService, MovieService } from 'src/app/services';
 import { Movie } from 'src/app/models';
 
 @Component({
@@ -12,7 +12,7 @@ export class SearchComponent implements OnInit {
   movies: Movie[] = [];
   error: any;
 
-  constructor(private searchService: SearchService) { }
+  constructor(private searchService: SearchService, private movieService: MovieService) { }
 
   ngOnInit() {
   }
@@ -32,7 +32,8 @@ export class SearchComponent implements OnInit {
       this.searchService.getMovieCreditsFromTMDB(movieId).subscribe(credits => {
         movie.cast = credits.cast;
         movie.crew = credits.crew;
-        this.error = movie;
+        this.movieService.createMovie(movie);
+        //this.error = movie;
       });
     },
     (err) => {

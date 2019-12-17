@@ -14,6 +14,8 @@ export class SearchService {
   the_movie_db_search_url: string = 'https://api.themoviedb.org/3/search/movie';
   the_movie_db_movie_url: string = 'https://api.themoviedb.org/3/movie';
   the_movie_db_image_url: string = 'https://image.tmdb.org/t/p/original';
+  the_movie_db_api_key: string = '9541c22073c3d2aa3521d1a99c015460';
+
   constructor(private httpClient: HttpClient) { }
 
   searchTerm(query: string, limit: number) {
@@ -73,7 +75,7 @@ export class SearchService {
   //Themoviedb.org
   SearchMoviesInTMDB(title: string, page: number) {
     const params = new HttpParams()
-      .set('api_key', '9541c22073c3d2aa3521d1a99c015460')
+      .set('api_key', this.the_movie_db_api_key)
       .set('include_adult', 'false')
       .set('language', 'en-US')
       .set('query', title)
@@ -86,7 +88,7 @@ export class SearchService {
             id: movie['id'],
             name: movie['title'],
             description: movie['overview'],
-            imageUrls: [movie['poster_path'] ? this.the_movie_db_image_url + movie['poster_path']: ''],
+            imageUrls: movie['poster_path'] ? [ this.the_movie_db_image_url + movie['poster_path']] : [],
             url: '',
             releaseDate: movie['release_date']
           } as Movie;
@@ -98,7 +100,7 @@ export class SearchService {
   //Themoviedb.org
   getMovieFromTMDB(movieId: string) {
     const params = new HttpParams()
-      .set('api_key', '9541c22073c3d2aa3521d1a99c015460')
+      .set('api_key', this.the_movie_db_api_key)
       .set('language', 'en-US');
 
     return this.httpClient.get<Movie>(this.the_movie_db_movie_url + '/' + movieId, { params }).pipe(
@@ -130,7 +132,7 @@ export class SearchService {
 
   getMovieCreditsFromTMDB(movieId: string) {
     const params = new HttpParams()
-      .set('api_key', '9541c22073c3d2aa3521d1a99c015460');
+      .set('api_key', this.the_movie_db_api_key);
 
     return this.httpClient.get<any>(this.the_movie_db_movie_url + '/' + movieId + '/credits', { params }).pipe(
       map(credits => {

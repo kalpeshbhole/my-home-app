@@ -9,6 +9,8 @@ import { environment } from '../environments/environment';
 import { SearchComponent, MovieListComponent, MovieDetailsComponent } from './components';
 import { SearchService, MovieService } from './services';
 import {FormsModule} from '@angular/forms';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule, FirestoreSettingsToken } from '@angular/fire/firestore';
 
 @NgModule({
   declarations: [
@@ -23,9 +25,12 @@ import {FormsModule} from '@angular/forms';
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     HttpClientModule,
     NgbModule,
-    FormsModule
+    FormsModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule
   ],
   providers: [
+    { provide: FirestoreSettingsToken, useValue: {} },
     SearchService,
     MovieService
   ],

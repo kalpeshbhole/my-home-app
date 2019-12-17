@@ -1,1 +1,16 @@
-<p>movie-list works!</p>
+<div class="d-flex flex-wrap justify-content-center">
+    <div class="card" style="width:50%" *ngFor="let movie of movies; let i = index;">
+        <img *ngIf="movie.imageUrls.length > 0" class="card-img-top" src="{{movie.imageUrls[0]}}" alt="image">
+        <div class="card-body">
+            <h4 class="card-title">{{movie.name}}</h4>
+            <p class="card-text">
+                {{movie.releaseDate | date:'longDate'}}
+                <!-- {{movie.description}} -->
+            </p>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="movies.length === 0">
+    Please add movies to your database.
+</div>
