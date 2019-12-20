@@ -7,19 +7,20 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
-import { SearchComponent, MovieListComponent, MovieDetailsComponent } from './components';
+import { SearchComponent, MovieListComponent, MovieDetailsComponent, DashboardComponent } from './components';
 import { SearchService, MovieService } from './services';
 import {FormsModule} from '@angular/forms';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule, FirestoreSettingsToken } from '@angular/fire/firestore';
-import { NgxSpinnerModule } from "ngx-spinner"; 
+import { NgxSpinnerModule } from "ngx-spinner";
 
 @NgModule({
   declarations: [
     AppComponent,
     SearchComponent,
     MovieListComponent,
-    MovieDetailsComponent
+    MovieDetailsComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
