@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1578978769119,
+  "timestamp": 1578979682140,
   "index": "https://kalpeshbhole.github.io/my-home-app/my-home-app/index.html",
   "assetGroups": [
     {
@@ -18,7 +18,30 @@
       "patterns": []
     }
   ],
-  "dataGroups": [],
+  "dataGroups": [
+    {
+      "name": "api-performance",
+      "patterns": [
+        "\\/assets\\/i18n\\/.*",
+        "\\/api\\/.*"
+      ],
+      "strategy": "performance",
+      "maxSize": 100,
+      "maxAge": 259200000,
+      "version": 1
+    },
+    {
+      "name": "api-freshness",
+      "patterns": [
+        "\\/api\\/fresh-todo-list"
+      ],
+      "strategy": "freshness",
+      "maxSize": 100,
+      "maxAge": 259200000,
+      "timeoutMs": 10000,
+      "version": 1
+    }
+  ],
   "hashTable": {},
   "navigationUrls": [
     {
