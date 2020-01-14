@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/@angular/service-worker/config/schema.json",
-  "index": "/my-home-app/index.html",
+  "index": "/index.html",
   "assetGroups": [
     {
       "name": "app",
@@ -13,6 +13,13 @@
           "/my-home-app/manifest.webmanifest",
           "/my-home-app/*.css",
           "/my-home-app/*.js"
+        ],
+        "urls": [
+          "/favicon.ico",
+          "/index.html",
+          "/manifest.webmanifest",
+          "/*.css",
+          "/*.js"
         ]
       }
     }, {
@@ -23,6 +30,9 @@
         "files": [
           "/my-home-app/assets/**",
           "/my-home-app/*.(eot|svg|cur|jpg|png|webp|gif|otf|ttf|woff|woff2|ani)"
+        ],
+        "urls": [
+          "/fontawesome-webfont*"
         ]
       }
     }
