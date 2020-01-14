@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1578983268679,
+  "timestamp": 1578983541645,
   "index": "https://kalpeshbhole.github.io/my-home-app/my-home-app/index.html",
   "assetGroups": [
     {
@@ -9,11 +9,11 @@
       "updateMode": "prefetch",
       "urls": [],
       "patterns": [
-        "\\/my-home-app\\/favicon\\.ico",
-        "\\/my-home-app\\/index\\.html",
-        "\\/my-home-app\\/manifest\\.webmanifest",
-        "\\/my-home-app\\/[^/]*\\.css",
-        "\\/my-home-app\\/[^/]*\\.js"
+        "\\/favicon\\.ico",
+        "\\/index\\.html",
+        "\\/manifest\\.webmanifest",
+        "\\/[^/]*\\.css",
+        "\\/[^/]*\\.js"
       ]
     },
     {
