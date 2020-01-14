@@ -4,8 +4,9 @@ import { SearchComponent, MovieListComponent, MovieDetailsComponent, DashboardCo
 
 
 const routes: Routes = [
-  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-  { path: 'dashboard', component: DashboardComponent },
+  // { path: '', redirectTo: 'dashboard' },
+  // { path: 'dashboard', component: DashboardComponent },
+  { path: '', component: DashboardComponent },
   { path: 'search', component: SearchComponent },
   { path: 'movies', component: MovieListComponent },
   { path: 'movie/:movieId', component: MovieDetailsComponent }

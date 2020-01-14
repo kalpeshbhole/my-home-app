@@ -5,7 +5,7 @@
   "background_color": "#fafafa",
   "display": "standalone",
   "scope": "/my-home-app/",
-  "start_url": "/my-home-app/dashboard",
+  "start_url": "/my-home-app/",
   "icons": [
     {
       "src": "assets/icons/icon-72x72.png",
