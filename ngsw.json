@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1578984304304,
+  "timestamp": 1578985089694,
   "index": "https://kalpeshbhole.github.io/my-home-app/index.html",
   "assetGroups": [
     {
@@ -12,7 +12,8 @@
         "\\/favicon\\.ico",
         "\\/index\\.html",
         "\\/[^/]*\\.css",
-        "\\/[^/]*\\.js"
+        "\\/[^/]*\\.js",
+        "\\/fontawesome-webfont\\.af7ae505a9eed503f8b8\\.woff2\\?v=4\\.7\\.0"
       ]
     },
     {
