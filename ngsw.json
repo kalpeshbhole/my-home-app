@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1578986940693,
+  "timestamp": 1580313118064,
   "index": "https://kalpeshbhole.github.io/my-home-app/index.html",
   "assetGroups": [
     {
@@ -26,7 +26,20 @@
       ]
     }
   ],
-  "dataGroups": [],
+  "dataGroups": [
+    {
+      "name": "api-freshness",
+      "patterns": [
+        "https:\\/\\/firestore\\.googleapis\\.com\\/.*",
+        "https:\\/\\/api\\.themoviedb\\.org\\/3\\/search\\/movie\\?[^/]*[^/]*"
+      ],
+      "strategy": "freshness",
+      "maxSize": 100,
+      "maxAge": 259200000,
+      "timeoutMs": 10000,
+      "version": 1
+    }
+  ],
   "hashTable": {},
   "navigationUrls": [
     {
