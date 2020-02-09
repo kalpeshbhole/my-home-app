@@ -5,6 +5,7 @@
     {
       "name": "my-home-app",
       "installMode": "prefetch",
+      "updateMode": "prefetch",
       "resources": {
         "files": [
           "/my-home-app/favicon.ico",
@@ -12,6 +13,13 @@
           "/my-home-app/manifest.webmanifest",
           "/my-home-app/*.css",
           "/my-home-app/*.js"
+        ],
+        "urls": [
+          "/favicon.ico",
+          "/index.html",
+          "/manifest.webmanifest",
+          "/*.css",
+          "/*.js"
         ]
       }
     }, {
@@ -22,6 +30,9 @@
         "files": [
           "/my-home-app/assets/**",
           "/my-home-app/*.(eot|svg|cur|jpg|png|webp|gif|otf|ttf|woff|woff2|ani)"
+        ],
+        "urls": [
+          "/fontawesome-webfont*"
         ]
       }
     }
